@@ -77,6 +77,48 @@ mytodo/
 # Creación de la aplicación de tareas 
 Hasta el momento, lo unico que hemos realizado es la configuracion del entorno y la creación de un proyecto, empezaremos a crear funcionalidades. 
 
+1. Iniciaremos creando una aplicación llamada `tasks` ejecutando: 
+```
+python manage.py startapp tasks
+```
+Donde encontrarás archivos como:
+```
+tasks/
+│-- models.py  # Define la estructura de datos
+│-- views.py  # Contiene la lógica de las vistas
+│-- admin.py  # Configuración del panel de administración
+│-- urls.py  # Definición de rutas de la aplicación (crear manualmente)
+```
+2. Una vez creada la aplicación, es necesario que la registremos en la configuracion del proyecto para que Django la reconozca.
+   - Ir a `settings.py`
+   - Buscar la lista llamada `INSTALLED_APPS`
+   - Y agregamos un elemento, en este caso `tasks`
+3. Incluir URLs en el proyecto
+   Es necesario que Django reconozca las rutas que el proyecto esta usando, por lo que las incluiremos en el archivo URLs principal.
+Para hacer esto, debemos:
+- Ir a archivo [URLs principal ](https://github.com/yuluka/django-todo-tutorial/blob/main/todo_app/urls.py)
+- Importamos la función `include`:
+```
+from django.urls import path, include
+```
+ Agregamos a la lista `urlpatterns` con una funcion `include()`:
+ ```
+path('', include(tasks.urls)),
+```
+4. Vista inicial
+   Debemos crear una función encargada de mostrarnos en una pagina el inicio de nuestra aplicación.
+   Para ello iremos a `views.py` y haremos la siguiente función:
+   ```
+   def home(request):
+    return render(request, 'home.html')
+   ```
+   
+
+
+
+
+
+
 
 
 
