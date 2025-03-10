@@ -1529,6 +1529,58 @@ urlpatterns = [
     path('tasks/delete/<int:pk>/', TaskDeleteView.as_view(), name='delete-task'),
 ]
 ```
+# Migrar un cambio de dato
+Migrar un cambio de dato en Django significa modificar los valores almacenados en la base de datos mediante una migración de datos, sin alterar la estructura de las tablas.
+
+🔹 Ejemplo práctico
+Si tienes un modelo Task con un campo status que almacena estados como "Pendiente", "En progreso", etc., y quieres actualizar todas las tareas "Pendiente" a "En progreso", puedes hacerlo con una migración de datos.
+
+Siguiendo esto, podemos ir y establecer lo siguiente para ello:
+```
+def update_task_status(apps, schema_editor):
+    Task = apps.get_model('tasks', 'Task')
+    Task.objects.filter(status='Pendiente').update(status='En progreso')
+
+class Migration(migrations.Migration):
+    dependencies = [
+        ('tasks', 'última_migración'),
+    ]
+    operations = [
+        migrations.RunPython(update_task_status),
+    ]
+```
+Suponiendo que tenemos un modelo tasks que almmacena tareas en pendiente y deseamos migrarlas a "en proceso".
+
+# Agregar nuevas columnas 
+```
+class Task(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+    deadline = models.DateField(null=True, blank=True)
+    status = models.CharField(max_length=50)
+    new_field = models.CharField(max_length=100, default='Nuevo valor')  # Nuevo campo
+```
+Ejecutas en la consola: 
+```
+python manage.py makemigrations tasks
+python manage.py migrate
+```
+Y si deseas cambiar el tipo de dato de la columna:
+```
+class Task(models.Model):
+    status = models.IntegerField(default=0)  # Antes era CharField
+```
+# Crear una nueva tabla 
+```
+class Category(models.Model):
+    name = models.CharField(max_length=255)
+```
+Y ejecutas:
+```
+python manage.py makemigrations tasks
+python manage.py migrate
+```
+
 
 
 
