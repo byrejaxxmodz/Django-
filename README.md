@@ -1,7 +1,8 @@
-# Django- BASIC  
+# PUNTO A
+## Django- BASIC  
 ## Acerca del proyecto
 En este repositorio encontrarás un paso a paso básico de cómo crear una aplicación,  usando Python Django para la gestión de tareas pendientes. Se explica los pasos para configurar un entorno virtual, instalar dependencias y manejo de usuarios, correos, etc.
-# Instalación y configuración
+## Instalación y configuración
 ## 1. Crear un entorno virtual
 Es recomendable utilizar un entorno virtual de Python para aislar las dependencias del proyecto y evitar conflictos con otras aplicaciones.
 
@@ -83,7 +84,7 @@ mytodo/
 │   │-- wsgi.py  # Configuración para servidores web
 │   │-- asgi.py  # Configuración para servidores asíncronos
 ```
-# Creación de la aplicación de tareas 
+## Creación de la aplicación de tareas 
 Hasta el momento, lo unico que hemos realizado es la configuracion del entorno y la creación de un proyecto, empezaremos a crear funcionalidades. 
 
 1. Iniciaremos creando una aplicación llamada `tasks` ejecutando: 
@@ -428,7 +429,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from tasks.models import Task, Status
 ```
-## 10.1 Diseñar la pantalla HTML
+## 10.2 Diseñar la pantalla HTML
 Para que la vista pueda renderizar contenido, es necesario crear una plantilla HTML.
 
 Dirígete a la carpeta donde se encuentran los templates de la aplicación.
@@ -480,7 +481,7 @@ Dentro de este archivo, agrega el código necesario para mostrar el formulario d
 
 {% endblock content %}
 ```
-## 10.2 Registrar la URL:
+## 10.3 Registrar la URL:
 Para permitir el acceso a la pantalla de creación de tareas, es necesario registrar la ruta correspondiente en el archivo de URLs de la aplicación.
 
 Abre el archivo `urls.py` dentro de la aplicación.
@@ -488,7 +489,7 @@ Agrega la siguiente ruta:
 ```
 path('create-task/', views.create_task, name='create-task'),
 ```
-## 10.3 Crear funcionalidad "Ver lista de Tareas"
+## 10.4 Crear funcionalidad "Ver lista de Tareas"
 Ahora tienes que crear una pantalla que te permita ver las tareas creadas hasta el momento, con su respectiva información.
 Crear vista:
 - Ve a views.py y define la vista con la que se renderizará la pantalla de listado de tareas:
@@ -498,7 +499,7 @@ def list_tasks(request):
         'tasks': Task.objects.all(),
     })
 ```
-## 10.4 Crear la pantalla HTML:
+## 10.5 Crear la pantalla HTML:
 
 Ve a `templates/` y crea un archivo con el nombre `list_tasks.html`.
 
@@ -610,14 +611,14 @@ Dentro de este archivo, pon el código:
 ```
 
 
-## 10.5 Registrar URL:
+## 10.6 Registrar URL:
 
 Ve al archivo de URLs y agrega la ruta así:
 
 ````
 path('list-tasks/', views.list_tasks, name='list-tasks'),
 ````
-## 10.6 Crear funcionalidad "Editar tarea"
+## 10.7 Crear funcionalidad "Editar tarea"
 Ahora debes implementar una forma de editar las tareas que ya hayas creado.
 - Crear vista:
 - Ve a `views.py` y define la vista con la que se renderizará la pantalla de edición de tareas:
@@ -652,7 +653,7 @@ Ahora debes implementar una forma de editar las tareas que ya hayas creado.
         'task_statuses': Status.objects.all(),
     })
     ````
-## 10.7 Crear la pantalla HTML:
+## 10.8 Crear la pantalla HTML:
 
 - Ve a `templates/` y crea un archivo con el nombre `edit_task.html`.
 
@@ -712,13 +713,13 @@ Ahora debes implementar una forma de editar las tareas que ya hayas creado.
 
 {% endblock content %}
 ````
-## 10.8 Registrar URL:
+## 10.9 Registrar URL:
 
 - Ve al archivo de URLs y agrega la ruta así:
 ````
 path('edit-task/<int:task_id>/', views.edit_task, name='edit-task'),
 ````
-## 10.9 Crear funcionalidad "Eliminar tarea"
+## 10.10 Crear funcionalidad "Eliminar tarea"
 
 La última funcionalidad que falta por crear es la de eliminar tareas.
 
@@ -734,11 +735,12 @@ La última funcionalidad que falta por crear es la de eliminar tareas.
   ````
   - Registrar URL:
 
-## 10.10 Ve al archivo de URLs y agrega la ruta así:
+## 10.11 Ve al archivo de URLs y agrega la ruta así:
 ````
 path('delete-task/<int:task_id>/', views.delete_task, name='delete-task'),
 ````
-# Envio de correo
+# PUNTO B
+## Envio de correo
 1. Ve a la administración de tu cuenta de google
 2. Ve a seguridad y activación en dos pasos
 3. Luego, ve a contraseñas de aplicación
@@ -835,7 +837,7 @@ path('send-email/', views.send_email_view, name='send-email'),
 <a href="{% url 'send-email' %}">Enviar Correo</a>
 ```
 - Corre el servidor, llena los datos de la funcionalidad que se acaba de crear con un correo destino y verifica la llegada de este mismo.
-# Autenticación
+## Autenticación
 Nota: Crea una carpeta en templates llamada `Auth` ya que ahí estaremos trabajando.
 1. Configurar la autenticación en settings:
 ```
@@ -1008,7 +1010,7 @@ Sesión</button>
  </div>
  {% endif %}
 ```
-# Autorización
+## Autorización
 Aclaraciones:
 Django tiene grupos y permisos listos para usar:
 ## Grupos: 
@@ -1059,7 +1061,7 @@ Ahora podemos proteger nuestras rutas por permisos:
 @permission_required("task.add_task", raise_exception=True)
 ```
 Ahora al ejecutar la pagina e ingresar con un usuario normal, si intentamos crear una tarea, nos debería mostrar el error `403 Forbidden`. Sin embargo, al ingresar con las credenciales `admin` esto no pasay funciona normal.
-# Manejo de roles 
+## Manejo de roles 
 Para hacer funcionalidades segun los roles tenemos que hacer una funcion para verificar que mi usuario pasa
 un filtro definido por una función en esta caso vamos a verificar si es `admin`, es decir, si es superuser o
 pertenece al grupo admin que creamos esto en `views.py`
@@ -1167,7 +1169,7 @@ Agregamos la ruta:
 path("admins/roles/", views.manage_roles, name="manage-roles"),
 ```
 Con esto, al acceder a la pantalla de roles desde la ruta `http://localhost:8000/admins/roles/` y podremos manejar los roles desde ahí
-# Manejo de permisos
+## Manejo de permisos
 ## 1. Crear un archivo signals.py
 Hacemos esto para manejar la creación cada que implementemos una nueva tarea.
 ```
@@ -1529,7 +1531,7 @@ urlpatterns = [
     path('tasks/delete/<int:pk>/', TaskDeleteView.as_view(), name='delete-task'),
 ]
 ```
-# Migrar un cambio de dato
+## Migrar un cambio de dato
 Migrar un cambio de dato en Django significa modificar los valores almacenados en la base de datos mediante una migración de datos, sin alterar la estructura de las tablas.
 
 🔹 Ejemplo práctico
@@ -1570,7 +1572,7 @@ Y si deseas cambiar el tipo de dato de la columna:
 class Task(models.Model):
     status = models.IntegerField(default=0)  # Antes era CharField
 ```
-# Crear una nueva tabla 
+## Crear una nueva tabla 
 ```
 class Category(models.Model):
     name = models.CharField(max_length=255)
