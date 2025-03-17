@@ -759,12 +759,13 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 - Para enviar un correo desde cualquier vista, puedes usar:
 ```
 from django.core.mail import send_mail
+
 send_mail(
- 'Asunto del correo',
- 'Este es el contenido del correo.',
- 'tu_correo@gmail.com', # Remitente (debe coincidir con EMAIL_HOST_USER)
- ['destinatario@gmail.com'], # Lista de destinatarios
- fail_silently=False,
+    'Asunto del correo',
+    'Este es el contenido del correo.',
+    'tu_correo@gmail.com',  # Remitente (debe coincidir con EMAIL_HOST_USER)
+    ['destinatario@gmail.com'],  # Lista de destinatarios
+    fail_silently=False,
 )
 ```
 - En `views.py` agrega:
