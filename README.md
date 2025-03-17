@@ -1467,6 +1467,14 @@ def delete_task(request, task_id):
 ```
 Agregamos los imports:
 ```
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
+from django.contrib import messages
+import datetime
+
+from .models import Task, Status
+
 @login_required
 def edit_task(request, task_id):
     task = get_object_or_404(Task, id=task_id)
