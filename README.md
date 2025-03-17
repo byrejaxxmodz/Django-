@@ -1592,7 +1592,7 @@ Migrar un cambio de dato en Django significa modificar los valores almacenados e
 🔹 Ejemplo práctico
 Si tienes un modelo Task con un campo status que almacena estados como "Pendiente", "En progreso", etc., y quieres actualizar todas las tareas "Pendiente" a "En progreso", puedes hacerlo con una migración de datos.
 
-Siguiendo esto, podemos ir y establecer lo siguiente para ello:
+Siguiendo esto, podemos ir al archivo models.py y establecer lo siguiente:
 ```
 def update_task_status(apps, schema_editor):
     Task = apps.get_model('tasks', 'Task')
